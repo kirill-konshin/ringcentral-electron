@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RingCentral</title>
+    <!--<script src="../node_modules/less/dist/less.js"></script>-->
+    <!--<link rel="stylesheet" href="styles/styles.less">-->
+    <style>
+        #loading {
+            background: #ffffff url(images/spinner.gif) no-repeat center center;
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="loading"></div>
+<div id="app"></div>
+<script>
+
+    require('babel-register');
+    require('./index');
+
+    var fs = require('fs');
+    var less = require('less');
+    var styles = fs.readFileSync(__dirname + '/styles/styles.less', 'utf8');
+
+    less.render(styles, {
+        paths: [__dirname + '/styles']
+    }, function(e, output) {
+        console.log('less render complete.');
+        var styleElem = document.createElement('style');
+        styleElem.type = 'text/css';
+        styleElem.appendChild(document.createTextNode(output.css));
+        document.head.appendChild(styleElem);
+    });
+
+</script>
+</body>
+</html>

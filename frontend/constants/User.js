@@ -1,0 +1,9 @@
+export const LOGIN_REQUEST = 'LOGIN_REQUEST';
+export const LOGIN_SUCCES = 'LOGIN_SUCCES';
+export const LOGIN_FAIL = 'LOGIN_FAIL';
+export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
+export const LOGOUT_FAIL = 'LOGOUT_FAIL';
+export const REFRESH_REQUEST = 'REFRESH_REQUEST';
+export const REFRESH_SUCCESS = 'REFRESH_SUCCESS';
+export const REFRESH_FAIL = 'REFRESH_FAIL';
