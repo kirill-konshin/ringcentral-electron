@@ -1,9 +1,14 @@
 import React from "react";
 import {render} from "react-dom";
 import {Provider} from "react-redux";
-import App from "./containers/App";
-import store from "./store/store";
-// import "./styles/styles.less";
+import App from "./components/App";
+import configureStore from "./store/configureStore";
+import {dispatchEventsToStore} from "./actions/User";
+import "./styles/styles.less";
+
+const store = configureStore();
+
+dispatchEventsToStore(store);
 
 window.onload = () => {
 

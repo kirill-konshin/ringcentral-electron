@@ -1,5 +1,17 @@
 import React, {PropTypes, Component} from "react";
+import {bindActionCreators} from "redux";
+import {connect} from "react-redux";
+import * as messageActions from "../actions/Message";
 
+function mapStateToProps(state) {
+    return {...state.message}
+}
+
+function mapDispatchToProps(dispatch) {
+    return {...bindActionCreators(messageActions, dispatch)}
+}
+
+@connect(mapStateToProps, mapDispatchToProps)
 export default class Page extends Component {
 
     static propTypes = {
