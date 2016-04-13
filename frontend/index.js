@@ -4,7 +4,10 @@ import {Provider} from "react-redux";
 import App from "./components/App";
 import configureStore from "./store/configureStore";
 import {dispatchEventsToStore} from "./actions/User";
-import "./styles/styles.less";
+
+if (process.env.WEBPACK) {
+    require("./styles/styles.less");
+}
 
 const store = configureStore();
 

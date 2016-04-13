@@ -2,7 +2,8 @@ import React, {Component} from "react";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import User from "./User";
-import Page from "./Page";
+import Message from "./Message";
+import Login from "./Login";
 import * as messageActions from "../actions/Message";
 import * as userActions from "../actions/User";
 
@@ -26,10 +27,11 @@ export default class App extends Component {
 
         const {user} = this.props;
 
-        return <div>
+        return <div className="container-fluid">
 
             <User />
-            {user.user ? <Page/> : null}
+
+            {user.user ? <Message/> : <Login/>}
 
         </div>;
 

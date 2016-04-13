@@ -5,10 +5,10 @@ export const GET_MESSAGES_SUCCESS = 'GET_MESSAGES_SUCCESS';
 export const GET_MESSAGES_FAIL = 'GET_MESSAGES_FAIL';
 
 const initialState = {
-    messages: [],
+    records: [],
     paging: {
-        page: 1,
-        totalPages: 1,
+        page: 0,
+        totalPages: 0,
         totalElements: 0
     },
     fetching: false,
@@ -19,7 +19,7 @@ const initialState = {
 
 export function getMessages(page) {
 
-    page = page || 1;
+    page = page || 0;
 
     return (dispatch) => {
 
@@ -29,7 +29,9 @@ export function getMessages(page) {
         });
 
         platform
-            .get('/account/~/extension/~/message-store', {page: page})
+            .get('/account/~/extension/~/message-store', {
+                dateFrom: new Date(Date.now() - 1000 * 60 * 60 * 24 * 30).toISOString()
+            }) //, {page: page}
             .then((res)=> {
                 dispatch({
                     type: GET_MESSAGES_SUCCESS,
@@ -64,8 +66,7 @@ export function messageReducer(state = initialState, action) {
         case GET_MESSAGES_SUCCESS:
             return {
                 ...state,
-                messages: action.payload.records,
-                paging: action.payload.paging,
+                ...action.payload,
                 fetching: false,
                 error: ''
             };
