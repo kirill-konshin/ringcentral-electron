@@ -3,7 +3,8 @@ import {render} from "react-dom";
 import {Provider} from "react-redux";
 import App from "./components/App";
 import configureStore from "./store/configureStore";
-import {dispatchEventsToStore} from "./actions/User";
+import {dispatchUserEventsToStore} from "./actions/User";
+import {dispatchPhoneEventsToStore} from "./actions/Phone";
 
 if (process.env.WEBPACK) {
     require("./styles/styles.less");
@@ -11,7 +12,8 @@ if (process.env.WEBPACK) {
 
 const store = configureStore();
 
-dispatchEventsToStore(store);
+dispatchUserEventsToStore(store);
+dispatchPhoneEventsToStore(store);
 
 window.onload = () => {
 

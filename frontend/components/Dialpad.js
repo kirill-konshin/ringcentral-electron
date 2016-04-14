@@ -2,7 +2,7 @@ import React, {PropTypes, Component} from "react";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {reduxForm} from "redux-form";
-import * as userActions from "../actions/User";
+import * as phoneActions from "../actions/Phone";
 import Glyphicon from "react-bootstrap/lib/Glyphicon";
 import Button from "react-bootstrap/lib/Button";
 import Input from "react-bootstrap/lib/Input";
@@ -14,7 +14,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return {...bindActionCreators(userActions, dispatch)}
+    return {...bindActionCreators(phoneActions, dispatch)}
 }
 
 @reduxForm({

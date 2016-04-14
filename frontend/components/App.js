@@ -6,8 +6,6 @@ import Message from "./Message";
 import OnCall from "./OnCall";
 import Dialpad from "./Dialpad";
 import Login from "./Login";
-import * as messageActions from "../actions/Message";
-import * as userActions from "../actions/User";
 import * as navActions from "../actions/Nav";
 import Nav from "react-bootstrap/lib/Nav";
 import NavItem from "react-bootstrap/lib/NavItem";
@@ -18,11 +16,12 @@ let map = {
     dialpad: Dialpad,
     calls: Message,
     contacts: Message
-}
+};
 
 function mapStateToProps(state) {
     return {
         nav: state.nav,
+        phone: state.phone,
         user: state.user,
         message: state.message
     }
@@ -30,22 +29,22 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        messageActions: bindActionCreators(messageActions, dispatch),
-        userActions: bindActionCreators(userActions, dispatch),
         navActions: bindActionCreators(navActions, dispatch)
     }
 }
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class App extends Component {
-    
+
+    //TODO PropTypes
+
     navigate(page) {
         this.props.navActions.navigate(page);
     }
     
     render() {
 
-        const {user: {user, session, callState}, nav: {page}} = this.props;
+        const {user: {user}, phone: {session}, nav: {page}} = this.props;
 
         let Cmp = map[page] || Message;
 

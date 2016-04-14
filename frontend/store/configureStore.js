@@ -1,24 +1,26 @@
 import {createStore, applyMiddleware, combineReducers} from "redux";
 import createLogger from "redux-logger";
 import thunk from "redux-thunk";
+import promiseMiddleware from "redux-promise-middleware";
 import {reducer as formReducer} from "redux-form";
 import reducers from "../actions/reducers";
 
 export default function configureStore(initialState) {
 
-    const logger = createLogger();
-
-    const rootReducer = combineReducers({
-        ...reducers,
-        form: formReducer
-    });
-
     const store = createStore(
-        rootReducer,
+        combineReducers({
+            ...reducers,
+            form: formReducer
+        }),
         initialState,
         applyMiddleware(
-            // logger,
-            thunk
+            promiseMiddleware({
+                promiseTypeSuffixes: ['PENDING', 'SUCCESS', 'ERROR']
+            }),
+            thunk,
+            createLogger({
+                collapsed: true
+            })
         )
     );
 

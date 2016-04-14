@@ -22,7 +22,7 @@ export default class Message extends Component {
         records: PropTypes.array.isRequired,
         paging: PropTypes.any.isRequired,
         getMessages: PropTypes.func.isRequired,
-        error: PropTypes.string.isRequired
+        error: PropTypes.string
     };
 
     onPageClick(e) {
@@ -39,14 +39,7 @@ export default class Message extends Component {
 
         if (error) return <Alert bsStyle="danger">Can't load messages {error}</Alert>;
 
-        const footer = <div>
-            Total calls: {records.length} of {paging.totalElements}, page {paging.page} of {paging.totalPages}
-            ({paging.perPage} per page)
-        </div>;
-
-        return <Panel header={<h3>Calls</h3>}>
-
-            <Table striped>
+        return <Table striped>
                 <thead>
                 <tr>
                     <th>From</th>
@@ -68,11 +61,16 @@ export default class Message extends Component {
                 )}
 
                 </tbody>
-                <tfoot></tfoot>
-            </Table>
-
-
-        </Panel>;
+                <tfoot>
+                <tr>
+                    <td colspan="3">
+                        Total calls: {records.length} of {paging.totalElements}, page {paging.page}
+                        of {paging.totalPages}
+                        ({paging.perPage} per page)
+                    </td>
+                </tr>
+                </tfoot>
+            </Table>;
     }
 }
 

@@ -30,7 +30,8 @@
     var styles = fs.readFileSync(__dirname + '/styles/styles.less', 'utf8');
 
     less.render(styles, {
-        paths: [__dirname + '/styles']
+        paths: [__dirname + '/styles'],
+        relativeUrls: true
     }, function(e, output) {
         console.log('less render complete.');
         var styleElem = document.createElement('style');
