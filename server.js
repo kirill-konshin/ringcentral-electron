@@ -18,6 +18,14 @@ app.get("/images/spinner.gif", function(req, res) {
   res.sendFile(__dirname + '/frontend/images/spinner.gif');
 });
 
+app.get("/node_modules/ringcentral-web-phone/audio/incoming.ogg", function(req, res) {
+  res.sendFile(__dirname + '/node_modules/ringcentral-web-phone/audio/incoming.ogg');
+});
+
+app.get("/node_modules/ringcentral-web-phone/audio/outgoing.ogg", function(req, res) {
+  res.sendFile(__dirname + '/node_modules/ringcentral-web-phone/audio/outgoing.ogg');
+});
+
 app.listen(port, function(error) {
   if (error) {
     console.error(error);

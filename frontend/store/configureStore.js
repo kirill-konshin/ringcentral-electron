@@ -7,7 +7,7 @@ import reducers from "../actions/reducers";
 export default function configureStore(initialState) {
 
     const logger = createLogger();
-    
+
     const rootReducer = combineReducers({
         ...reducers,
         form: formReducer
@@ -16,7 +16,11 @@ export default function configureStore(initialState) {
     const store = createStore(
         rootReducer,
         initialState,
-        applyMiddleware(thunk, logger));
+        applyMiddleware(
+            // logger,
+            thunk
+        )
+    );
 
     if (module.hot) {
 

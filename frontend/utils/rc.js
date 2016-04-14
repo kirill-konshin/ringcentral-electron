@@ -1,4 +1,5 @@
 import SDK from "ringcentral";
+import WebPhone from "ringcentral-web-phone";
 
 var sdk = new SDK({
     server: SDK.server.production + ':443', //FIXME Port???
@@ -10,4 +11,4 @@ var platform = sdk.platform();
 
 // Exports
 
-export {platform, sdk};
+export {platform, sdk, WebPhone};

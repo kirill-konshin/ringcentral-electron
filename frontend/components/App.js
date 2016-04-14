@@ -3,12 +3,26 @@ import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import User from "./User";
 import Message from "./Message";
+import OnCall from "./OnCall";
+import Dialpad from "./Dialpad";
 import Login from "./Login";
 import * as messageActions from "../actions/Message";
 import * as userActions from "../actions/User";
+import * as navActions from "../actions/Nav";
+import Nav from "react-bootstrap/lib/Nav";
+import NavItem from "react-bootstrap/lib/NavItem";
+import Glyphicon from "react-bootstrap/lib/Glyphicon";
+
+let map = {
+    messages: Message,
+    dialpad: Dialpad,
+    calls: Message,
+    contacts: Message
+}
 
 function mapStateToProps(state) {
     return {
+        nav: state.nav,
         user: state.user,
         message: state.message
     }
@@ -17,21 +31,46 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         messageActions: bindActionCreators(messageActions, dispatch),
-        userActions: bindActionCreators(userActions, dispatch)
+        userActions: bindActionCreators(userActions, dispatch),
+        navActions: bindActionCreators(navActions, dispatch)
     }
 }
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class App extends Component {
+    
+    navigate(page) {
+        this.props.navActions.navigate(page);
+    }
+    
     render() {
 
-        const {user} = this.props;
+        const {user: {user, session, callState}, nav: {page}} = this.props;
+
+        let Cmp = map[page] || Message;
+
+        if (!!user && session) {
+            Cmp = OnCall;
+        }
+
+        let content = !!user ? <div>
+
+            <Cmp/>
+            
+            <Nav className="x-bottom-nav" bsStyle="pills" justified activeKey={page} onSelect={::this.navigate}>
+                <NavItem eventKey="messages"><Glyphicon glyph="inbox"/><br/>Messages</NavItem>
+                <NavItem eventKey="dialpad"><Glyphicon glyph="th"/><br/>Dialpad</NavItem>
+                <NavItem eventKey="calls"><Glyphicon glyph="earphone"/><br/>Calls</NavItem>
+                <NavItem eventKey="contacts"><Glyphicon glyph="user"/><br/>Contacts</NavItem>
+            </Nav>
+
+        </div>: <Login/>;
 
         return <div className="container-fluid">
 
             <User />
 
-            {user.user ? <Message/> : <Login/>}
+            {content}
 
         </div>;
 

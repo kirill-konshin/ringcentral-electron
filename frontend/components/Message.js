@@ -72,13 +72,15 @@ export default class Message extends Component {
             </Table>
 
 
-        </Panel>
+        </Panel>;
     }
 }
 
 function contact(rec) {
     return <div>
         {rec.name || rec.phoneNumber || rec.extension}
-        {rec.location ? <div><small>{rec.location}</small></div> : null}
+        {rec.location ? <div>
+            <small>{rec.location}</small>
+        </div> : null}
     </div>;
 }

@@ -1,5 +1,11 @@
 @import "../../node_modules/bootstrap/less/bootstrap.less"; // can't use ~bootstrap because less is compiled also not in webpack
 
 body {
-    padding-top: @navbar-height + @line-height-computed;
+    padding: (@navbar-height + @line-height-computed) 0;
+}
+
+.x-bottom-nav {
+    position: fixed;
+    bottom: 0;
+    background: white;
 }
