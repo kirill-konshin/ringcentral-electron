@@ -2,11 +2,10 @@ import React, {PropTypes, Component} from "react";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import * as userActions from "../actions/User";
-import Nav from 'react-bootstrap/lib/Nav';
-import Navbar from 'react-bootstrap/lib/Navbar';
-import NavItem from 'react-bootstrap/lib/NavItem';
-import NavbarBrand from 'react-bootstrap/lib/NavbarBrand';
-import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import Button from "react-bootstrap/lib/Button";
+import Glyphicon from "react-bootstrap/lib/Glyphicon";
+import Media from "react-bootstrap/lib/Media";
+import {platform} from "../utils/rc";
 
 function mapStateToProps(state) {
     return {...state.user}
@@ -32,17 +31,22 @@ export default class User extends Component {
 
         const {user} = this.props;
 
-        return <Navbar fixedTop>
+        return <div>
 
-            <NavbarBrand>
-                <span className="navbar-brand">Brand</span>
-            </NavbarBrand>
+            <Media>
+                <Media.Left>
+                    <img width={64} height={64} src={platform.createUrl(user.profileImage.uri, {addToken: true})} alt="Image"/>
+                </Media.Left>
+                <Media.Body>
+                    <Media.Heading>{user.name}</Media.Heading>
+                    <p>{user.contact.company}</p>
+                    <p>{user.contact.email}</p>
+                </Media.Body>
+            </Media>
 
-            {!!user ? <Nav pullRight>
-                <NavItem onClick={::this.logout}><Glyphicon glyph="log-out"/> Logout ({user.name})</NavItem>
-            </Nav> : null}
+            <p><Button onClick={::this.logout} bsStyle="danger" block><Glyphicon glyph="log-out"/> Logout</Button></p>
 
-        </Navbar>;
+        </div>;
 
     }
 }

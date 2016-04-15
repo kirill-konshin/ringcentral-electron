@@ -1,25 +1,25 @@
 import {platform} from "../utils/rc";
 import typeToReducer from "type-to-reducer";
 
-const GET_MESSAGES = 'GET_MESSAGES';
+const GET_CALLS = 'GET_CALLS';
 
 // Actions
 
 let cache = null;
 
-export function getMessages(page) {
+export function getCalls(page) {
 
     if (cache) {
         return {
-            type: GET_MESSAGES + '_SUCCESS',
+            type: GET_CALLS + '_SUCCESS',
             payload: cache
         };
     }
 
     return {
-        type: GET_MESSAGES,
+        type: GET_CALLS,
         payload: platform
-            .get('/account/~/extension/~/message-store', {
+            .get('/account/~/extension/~/call-log', {
                 // page: page,
                 dateFrom: new Date(Date.now() - 1000 * 60 * 60 * 24 * 30).toISOString()
             }) //, {}
@@ -44,8 +44,8 @@ const initialState = {
     error: ''
 };
 
-export const messageReducer = typeToReducer({
-    [GET_MESSAGES]: {
+export const callReducer = typeToReducer({
+    [GET_CALLS]: {
         PENDING: (state, action)=> {
             return {
                 ...state,

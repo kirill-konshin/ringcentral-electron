@@ -1,50 +1,47 @@
 import React, {PropTypes, Component} from "react";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
-import * as messageActions from "../actions/Message";
-import Panel from "react-bootstrap/lib/Panel";
+import * as contactActions from "../actions/Contact";
 import Alert from "react-bootstrap/lib/Alert";
 import Table from "react-bootstrap/lib/Table";
-import helpers from "ringcentral-helpers";
 
 function mapStateToProps(state) {
-    return {...state.message}
+    return {...state.contact}
 }
 
 function mapDispatchToProps(dispatch) {
-    return {...bindActionCreators(messageActions, dispatch)}
+    return {...bindActionCreators(contactActions, dispatch)}
 }
 
 @connect(mapStateToProps, mapDispatchToProps)
-export default class Message extends Component {
+export default class Contact extends Component {
 
     static propTypes = {
         records: PropTypes.array.isRequired,
         paging: PropTypes.any.isRequired,
-        getMessages: PropTypes.func.isRequired,
+        getContacts: PropTypes.func.isRequired,
         error: PropTypes.string
     };
 
     onPageClick(e) {
-        this.props.getMessages(+e.target.innerText)
+        this.props.getContacts(+e.target.innerText)
     }
 
     componentWillMount() {
-        this.props.getMessages();
+        this.props.getContacts();
     }
 
     render() {
 
         const {paging, records, fetching, error} = this.props;
 
-        if (error) return <Alert bsStyle="danger">Can't load messages: {error}</Alert>;
+        if (error) return <Alert bsStyle="danger">Can't load contacts: {error}</Alert>;
 
         return <Table striped>
                 <thead>
                 <tr>
-                    <th>From</th>
-                    <th>To</th>
-                    <th>Duration</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -53,9 +50,8 @@ export default class Message extends Component {
                 </tr>
                     : records.map((entry, index) => {
                         return <tr key={index}>
-                            <td>{contact(entry.from)}</td>
-                            <td>{contact(entry.to[0])}{entry.to.length > 1 ? <div><small>And {entry.to.length - 1} more...</small></div> : ''}</td>
-                            <td>{entry.subject}</td>
+                            <td>{entry.firstName}</td>
+                            <td>{entry.lastName}</td>
                         </tr>;
                     }
                 )}
@@ -72,13 +68,4 @@ export default class Message extends Component {
                 </tfoot>
             </Table>;
     }
-}
-
-function contact(rec) {
-    return <div>
-        {rec.name || rec.phoneNumber || rec.extension}
-        {rec.location ? <div>
-            <small>{rec.location}</small>
-        </div> : null}
-    </div>;
 }

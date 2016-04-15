@@ -1,11 +1,37 @@
 @import "../../node_modules/bootstrap/less/bootstrap.less"; // can't use ~bootstrap because less is compiled also not in webpack
 
+@grid-float-breakpoint: @screen-xs;
+@screen-sm: @screen-xs;
+
 body {
-    padding: (@navbar-height + @line-height-computed) 0;
+    padding-top: @line-height-computed;
+    padding-bottom: (@navbar-height + @line-height-computed);
+    overflow: hidden;
+    -webkit-overflow-scrolling: auto;
 }
 
-.x-bottom-nav {
-    position: fixed;
+@media (min-width: @screen-xs){
+    .navbar-nav {
+        margin: 0 auto;
+        display: table;
+        table-layout: auto;
+        float: none;
+        width: 100%;
+    }
+    .navbar-nav>li {
+        display: table-cell;
+        float: none;
+        text-align: center;
+        width: 20%;
+    }
+}
+
+#app {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
     bottom: 0;
-    background: white;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }

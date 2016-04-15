@@ -1,43 +1,42 @@
 import React, {PropTypes, Component} from "react";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
-import * as messageActions from "../actions/Message";
-import Panel from "react-bootstrap/lib/Panel";
+import * as callActions from "../actions/Call";
 import Alert from "react-bootstrap/lib/Alert";
 import Table from "react-bootstrap/lib/Table";
 import helpers from "ringcentral-helpers";
 
 function mapStateToProps(state) {
-    return {...state.message}
+    return {...state.call}
 }
 
 function mapDispatchToProps(dispatch) {
-    return {...bindActionCreators(messageActions, dispatch)}
+    return {...bindActionCreators(callActions, dispatch)}
 }
 
 @connect(mapStateToProps, mapDispatchToProps)
-export default class Message extends Component {
+export default class Call extends Component {
 
     static propTypes = {
         records: PropTypes.array.isRequired,
         paging: PropTypes.any.isRequired,
-        getMessages: PropTypes.func.isRequired,
+        getCalls: PropTypes.func.isRequired,
         error: PropTypes.string
     };
 
     onPageClick(e) {
-        this.props.getMessages(+e.target.innerText)
+        this.props.getCalls(+e.target.innerText)
     }
 
     componentWillMount() {
-        this.props.getMessages();
+        this.props.getCalls();
     }
 
     render() {
 
         const {paging, records, fetching, error} = this.props;
 
-        if (error) return <Alert bsStyle="danger">Can't load messages: {error}</Alert>;
+        if (error) return <Alert bsStyle="danger">Can't load calls: {error}</Alert>;
 
         return <Table striped>
                 <thead>
@@ -54,8 +53,8 @@ export default class Message extends Component {
                     : records.map((entry, index) => {
                         return <tr key={index}>
                             <td>{contact(entry.from)}</td>
-                            <td>{contact(entry.to[0])}{entry.to.length > 1 ? <div><small>And {entry.to.length - 1} more...</small></div> : ''}</td>
-                            <td>{entry.subject}</td>
+                            <td>{contact(entry.to)}</td>
+                            <td>{helpers.call().formatDuration(entry)}</td>
                         </tr>;
                     }
                 )}

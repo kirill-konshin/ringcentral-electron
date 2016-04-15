@@ -1,27 +1,26 @@
 import {platform} from "../utils/rc";
 import typeToReducer from "type-to-reducer";
 
-const GET_MESSAGES = 'GET_MESSAGES';
+const GET_CONTACTS = 'GET_CONTACTS';
 
 // Actions
 
 let cache = null;
 
-export function getMessages(page) {
+export function getContacts(page) {
 
     if (cache) {
         return {
-            type: GET_MESSAGES + '_SUCCESS',
+            type: GET_CONTACTS + '_SUCCESS',
             payload: cache
         };
     }
 
     return {
-        type: GET_MESSAGES,
+        type: GET_CONTACTS,
         payload: platform
-            .get('/account/~/extension/~/message-store', {
-                // page: page,
-                dateFrom: new Date(Date.now() - 1000 * 60 * 60 * 24 * 30).toISOString()
+            .get('/account/~/extension/~/address-book', {
+                // page: page
             }) //, {}
             .then((res)=> {
                 cache = res.json();
@@ -44,8 +43,8 @@ const initialState = {
     error: ''
 };
 
-export const messageReducer = typeToReducer({
-    [GET_MESSAGES]: {
+export const contactsReducer = typeToReducer({
+    [GET_CONTACTS]: {
         PENDING: (state, action)=> {
             return {
                 ...state,
