@@ -85,7 +85,6 @@ export function dispatchUserEventsToStore(store) {
     platform.on(platform.events.beforeRefresh, () => { store.dispatch(refreshRequest()); });
     platform.on(platform.events.refreshSuccess, (res)=> { store.dispatch(refreshSuccess()); });
     platform.on(platform.events.refreshError, (e)=> {
-        removeWebPhone();
         store.dispatch(refreshFail(e));
     });
 
@@ -93,7 +92,6 @@ export function dispatchUserEventsToStore(store) {
 
     platform.on(platform.events.beforeLogout, () => { store.dispatch(logoutRequest()); });
     platform.on(platform.events.logoutSuccess, (res) => {
-        removeWebPhone();
         store.dispatch(logoutSuccess());
     });
     platform.on(platform.events.logoutError, (e) => { store.dispatch(logoutFail(e)); });
